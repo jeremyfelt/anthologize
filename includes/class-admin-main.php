@@ -822,7 +822,7 @@ if ( ! class_exists( 'Anthologize_Admin_Main' ) ) :
 			<?php endif; ?>
 
 			<input type="hidden" id="menu_order" name="menu_order" value="<?php echo esc_attr( $post->menu_order ); ?>">
-			<input class="tags-input" type="hidden" id="anthologize_noncename" name="anthologize_noncename" value="<?php echo wp_create_nonce( __FILE__ ); ?>" />
+			<input class="tags-input" type="hidden" id="anthologize_noncename" name="anthologize_noncename" value="<?php echo esc_attr( wp_create_nonce( __FILE__ ) ); ?>" />
 		</div>
 			<?php
 		}
@@ -837,8 +837,8 @@ if ( ! class_exists( 'Anthologize_Admin_Main' ) ) :
 		 * @param int $user_id Optional The user to check. Defaults to logged-in user
 		 * @return bool $user_can_edit Returns true when the user can edit, false if not
 		 */
-		function user_can_edit( $post_id = false, $user_id = false ) {
-			global $post, $current_user;
+		public function user_can_edit( $post_id = false, $user_id = false ) {
+			global $current_user;
 
 			$user_can_edit = false;
 
@@ -856,7 +856,7 @@ if ( ! class_exists( 'Anthologize_Admin_Main' ) ) :
 				}
 
 				// Is the user the author of the post in question?
-				if ( $user_id == $post->post_author ) {
+				if ( (int) $user_id === (int) $post->post_author ) {
 					$user_can_edit = true;
 				}
 			}
@@ -870,7 +870,7 @@ if ( ! class_exists( 'Anthologize_Admin_Main' ) ) :
 		 * @package Anthologize
 		 * @since 0.6
 		 */
-		function ms_settings() {
+		public function ms_settings() {
 
 			$site_settings = get_site_option( 'anth_site_settings' );
 			$minimum_cap   = ! empty( $site_settings['minimum_cap'] ) ? $site_settings['minimum_cap'] : 'manage_options';
@@ -893,7 +893,7 @@ if ( ! class_exists( 'Anthologize_Admin_Main' ) ) :
 				 * options in the installer.
 				 */
 				?>
-				<label><input type="checkbox" class="tags-input" name="anth_site_settings[forbid_per_blog_caps]" value="1" 
+				<label><input type="checkbox" class="tags-input" name="anth_site_settings[forbid_per_blog_caps]" value="1"
 				<?php
 				if ( empty( $site_settings['forbid_per_blog_caps'] ) ) :
 					?>
@@ -907,13 +907,13 @@ if ( ! class_exists( 'Anthologize_Admin_Main' ) ) :
 
 				<td>
 					<select class="tags-input" name="anth_site_settings[minimum_cap]">
-						<option<?php selected( $minimum_cap, 'manage_network' ); ?> value="manage_network"><?php _e( 'Network Admin', 'anthologize' ); ?></option>
+						<option<?php selected( $minimum_cap, 'manage_network' ); ?> value="manage_network"><?php esc_html_e( 'Network Admin', 'anthologize' ); ?></option>
 
-						<option<?php selected( $minimum_cap, 'manage_options' ); ?> value="manage_options"><?php _e( 'Administrator', 'anthologize' ); ?></option>
+						<option<?php selected( $minimum_cap, 'manage_options' ); ?> value="manage_options"><?php esc_html_e( 'Administrator', 'anthologize' ); ?></option>
 
-						<option<?php selected( $minimum_cap, 'delete_others_posts' ); ?> value="delete_others_posts"><?php _e( 'Editor', 'anthologize' ); ?></option>
+						<option<?php selected( $minimum_cap, 'delete_others_posts' ); ?> value="delete_others_posts"><?php esc_html_e( 'Editor', 'anthologize' ); ?></option>
 
-						<option<?php selected( $minimum_cap, 'publish_posts' ); ?> value="publish_posts"><?php _e( 'Author', 'anthologize' ); ?></option>
+						<option<?php selected( $minimum_cap, 'publish_posts' ); ?> value="publish_posts"><?php esc_html_e( 'Author', 'anthologize' ); ?></option>
 
 						<?php /* Removing these for now */ ?>
 						<?php
@@ -929,6 +929,8 @@ if ( ! class_exists( 'Anthologize_Admin_Main' ) ) :
 		</table>
 
 			<?php
+
+			wp_nonce_field( 'anth_site_settings', 'anth_site_settings_nonce' );
 		}
 
 		/**
@@ -937,9 +939,15 @@ if ( ! class_exists( 'Anthologize_Admin_Main' ) ) :
 		 * @package Anthologize
 		 * @since 0.6
 		 */
-		function save_ms_settings() {
+		public function save_ms_settings() {
+			if ( ! isset( $_POST['anth_site_settings_nonce'] ) ) {
+				return;
+			}
+
+			check_admin_referer( 'anth_site_settings', 'anth_site_settings_nonce' );
+
 			$forbid_per_blog_caps = empty( $_POST['anth_site_settings']['forbid_per_blog_caps'] ) ? 1 : 0;
-			$minimum_cap          = empty( $_POST['anth_site_settings']['minimum_cap'] ) ? 'manage_options' : $_POST['anth_site_settings']['minimum_cap'];
+			$minimum_cap          = empty( $_POST['anth_site_settings']['minimum_cap'] ) ? 'manage_options' : sanitize_text_field( wp_unslash( $_POST['anth_site_settings']['minimum_cap'] ) );
 
 			// print_r( $_POST['anth_site_settings']['minimum_cap'] );
 			$anth_site_settings = array(
