@@ -9,7 +9,7 @@ if ( ! class_exists( 'Anthologize_Activation' ) ) :
 
 		var $settings;
 
-		function anthologize_activation() {
+		public function __construct() {
 			if ( ! $this->settings = get_option( 'anthologize_settings' ) ) {
 				$this->settings = array();
 			}
