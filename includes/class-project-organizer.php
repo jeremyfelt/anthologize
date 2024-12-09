@@ -217,7 +217,7 @@ if ( ! class_exists( 'Anthologize_Project_Organizer' ) ) :
 		<select name="sortby" id="sortby-dropdown">
 			<option value="" selected="selected"><?php _e( 'All posts', 'anthologize' ); ?></option>
 			<?php foreach ( $filters as $filter => $name ) : ?>
-				<option value="<?php echo esc_attr( $filter ); ?>" 
+				<option value="<?php echo esc_attr( $filter ); ?>"
 											<?php
 											if ( $filter == $cfilter ) :
 												?>
@@ -272,7 +272,7 @@ if ( ! class_exists( 'Anthologize_Project_Organizer' ) ) :
 			<option value=""><?php echo esc_html( $nulltext ); ?></option>
 			<?php foreach ( $terms as $term ) : ?>
 				<?php $term_value = ( $_COOKIE['anth-filter'] == 'tag' ) ? esc_attr( $term->slug ) : esc_attr( $term->term_id ); ?>
-				<option value="<?php echo esc_attr( $term_value ); ?>" 
+				<option value="<?php echo esc_attr( $term_value ); ?>"
 											<?php
 											if ( $cterm == $term_value ) :
 												?>
@@ -962,7 +962,7 @@ if ( ! class_exists( 'Anthologize_Project_Organizer' ) ) :
 		<li id="item-<?php the_ID(); ?>" class="part-item item">
 
 			<?php if ( $append_parent ) : ?>
-				<input type="checkbox" name="append_children[]" value="<?php the_ID(); ?>" 
+				<input type="checkbox" name="append_children[]" value="<?php the_ID(); ?>"
 																						<?php
 																						if ( $append_parent == $post->ID ) {
 																							echo 'checked="checked" disabled=disabled';}
