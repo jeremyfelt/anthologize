@@ -542,8 +542,10 @@ if ( ! class_exists( 'Anthologize_Project_Organizer' ) ) :
 					$date_range_where .= $wpdb->prepare( ' AND post_date <= %s,', $enddate );
 				}
 
-				$where_func   = '$where .= "' . $date_range_where . '"; return $where;';
-				$filter_where = create_function( '$where', $where_func );
+				$filter_where = function ( $where ) use ( $date_range_where ) {
+					return $where . $date_range_where;
+				};
+
 				add_filter( 'posts_where', $filter_where );
 			} else {
 
