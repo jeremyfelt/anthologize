@@ -13,5 +13,11 @@
     "require": {
       "pear/file_archive": "dev-master",
       "tecnickcom/tcpdf": "^6.5.0"
-    }
+    },
+		"require-dev": {
+			"phpcompatibility/php-compatibility": "*",
+			"phpcompatibility/phpcompatibility-wp": "*",
+			"php-parallel-lint/php-parallel-lint": "*",
+        "wp-coding-standards/wpcs": "dev-develop"
+		}
 }
