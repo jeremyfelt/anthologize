@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "827da29afae8a3fea334a579d7edb0b6",
+    "content-hash": "0abca5e7ce5169420b6c79696670dfb3",
     "packages": [
         {
             "name": "pear/console_getopt",
@@ -283,6 +283,41 @@
                 "source": "https://github.com/pear/PEAR_Exception"
             },
             "time": "2024-11-24T18:10:39+00:00"
+        },
+        {
+            "name": "php5friends/polyfill-create_function",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php5friends/polyfill-create_function.git",
+                "reference": "8ce0726a4ca334f37f57154a2b6d112352239c4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php5friends/polyfill-create_function/zipball/8ce0726a4ca334f37f57154a2b6d112352239c4a",
+                "reference": "8ce0726a4ca334f37f57154a2b6d112352239c4a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "create_function.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "FSFAP"
+            ],
+            "description": "Polyfill of create_function()",
+            "support": {
+                "issues": "https://github.com/php5friends/polyfill-create_function/issues",
+                "source": "https://github.com/php5friends/polyfill-create_function/tree/0.0.4"
+            },
+            "time": "2020-12-09T21:26:57+00:00"
         },
         {
             "name": "tecnickcom/tcpdf",
@@ -1028,6 +1063,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "pear/file_archive": 20,
+        "php5friends/polyfill-create_function": 20,
         "wp-coding-standards/wpcs": 20
     },
     "prefer-stable": false,

@@ -12,7 +12,8 @@
     ],
     "require": {
       "pear/file_archive": "dev-master",
-      "tecnickcom/tcpdf": "^6.5.0"
+      "tecnickcom/tcpdf": "^6.5.0",
+        "php5friends/polyfill-create_function": "dev-master"
     },
 		"require-dev": {
 			"phpcompatibility/php-compatibility": "*",
